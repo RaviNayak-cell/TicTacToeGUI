@@ -101,32 +101,32 @@ public class TicTacToeFrame extends JFrame {
             board[inRow][inCol] = currPlayer;
             display();
 
-            if (numTurns >= 8 && isTie()) {
-                gameRunning = false;
-                int cont = JOptionPane.showConfirmDialog(this, "The game ended in a tie!\nWould you like to play again?");
-                if (cont == JOptionPane.YES_OPTION) {
-                    clearBoard();
-                    display();
-                } else if (cont == JOptionPane.NO_OPTION) {
-                    System.exit(0);
-                }
-            } else if (isWin(currPlayer)) {
+            if (isWin(currPlayer)) {
                 gameRunning = false;
                 int cont = JOptionPane.showConfirmDialog(this, "Player " + currPlayer + " won!\nWould you like to play again?");
-                if (cont == JOptionPane.YES_OPTION) {
-                    clearBoard();
-                    display();
-                } else if (cont == JOptionPane.NO_OPTION) {
-                    System.exit(0);
-                }
+                handleGameEnd(cont);
+            } else if (numTurns == ROW * COL - 1) {
+                gameRunning = false;
+                int cont = JOptionPane.showConfirmDialog(this, "The game ended in a tie!\nWould you like to play again?");
+                handleGameEnd(cont);
             } else {
                 currPlayer = (currPlayer.equals("X")) ? "O" : "X";
+                numTurns++;
             }
-        } else
+        } else {
             JOptionPane.showMessageDialog(this, "Not a valid move!");
-
-
+        }
     }
+
+    private void handleGameEnd(int option) {
+        if (option == JOptionPane.YES_OPTION) {
+            clearBoard();
+            display();
+        } else if (option == JOptionPane.NO_OPTION) {
+            System.exit(0);
+        }
+    }
+
 
     private boolean isValidMove(int row, int col) {
         return board[row][col].equals(" ");
