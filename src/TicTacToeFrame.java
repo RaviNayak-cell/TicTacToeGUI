@@ -133,13 +133,25 @@ public class TicTacToeFrame extends JFrame {
     }
 
     private boolean isWin(String player) {
-        return (isColWin(player)|| isDiognalWin(player));
+        return (isColWin(player)|| isDiognalWin(player)) ||
+                (isRowWin(player) || isRowWin(player));
     }
 
 
     private boolean isDiognalWin(String player){
-        return (board[0][0].equals(player) && board[1][1].equals(player) && board[2][2].equals(player)) || (board[0][2].equals(player) && board[1][1].equals(player) && board[2][0].equals(player));
+        return (board[0][0].equals(player) && board[1][1].equals(player) && board[2][2].equals(player)) || (board[0][2].equals(player) && board[1][1].equals(player) && board[2][0].equals(player)) ||
+        (board[0][2].equals(player) && board[1][1].equals(player) && board[2][0].equals(player));
     }
+    private boolean isRowWin(String player) {
+        for (int i = 0; i < ROW; i++) {
+            if (board[i][0].equals(player) && board[i][1].equals(player) && board[i][2].equals(player)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
 
     private boolean isTie(){
         boolean tie = true;
